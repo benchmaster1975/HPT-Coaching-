@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HPT Pro System — Suivi Powerlifting Élite | HPT Coaching</title>
+<meta name="description" content="Le système de suivi Excel conçu par un athlète IPF Masters. 23 onglets, 589 formules, table RPE, simulateur de match. 39€ — livraison immédiate.">
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  :root{--gold:#C9A84C;--dark:#1A1A2E;--mid:#16213E;--white:#FFFFFF;--lgrey:#C0C0C0}
+  body{font-family:'Segoe UI',system-ui,sans-serif;background:#0D0D1A;color:#fff;line-height:1.6}
+  a{color:var(--gold);text-decoration:none}
+
+  /* NAV */
+  nav{display:flex;justify-content:space-between;align-items:center;padding:1rem 2rem;border-bottom:1px solid rgba(201,168,76,.2)}
+  .logo{font-size:1.2rem;font-weight:700;color:var(--gold);letter-spacing:2px}
+  .nav-cta{background:var(--gold);color:#0D0D1A;padding:.5rem 1.25rem;border-radius:6px;font-weight:700;font-size:.9rem}
+
+  /* HERO */
+  .hero{text-align:center;padding:5rem 1.5rem 4rem;max-width:800px;margin:0 auto}
+  .badge{display:inline-block;background:rgba(201,168,76,.15);border:1px solid rgba(201,168,76,.4);color:var(--gold);font-size:.8rem;padding:.3rem 1rem;border-radius:20px;margin-bottom:1.5rem;letter-spacing:1px}
+  .hero h1{font-size:clamp(2rem,5vw,3.2rem);font-weight:800;line-height:1.15;margin-bottom:1.25rem}
+  .hero h1 span{color:var(--gold)}
+  .hero p{font-size:1.1rem;color:var(--lgrey);max-width:580px;margin:0 auto 2rem}
+  .hero-btns{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap}
+  .btn-primary{background:var(--gold);color:#0D0D1A;padding:.85rem 2.5rem;border-radius:8px;font-weight:800;font-size:1.05rem;border:none;cursor:pointer}
+  .btn-secondary{background:transparent;color:var(--gold);border:2px solid var(--gold);padding:.85rem 2rem;border-radius:8px;font-weight:700;font-size:1rem}
+  .price-tag{font-size:.85rem;color:var(--lgrey);margin-top:.75rem}
+  .price-tag s{color:#666}
+  .price-tag strong{color:var(--gold);font-size:1.1rem}
+
+  /* PROOF STRIP */
+  .proof-strip{background:rgba(201,168,76,.08);border-top:1px solid rgba(201,168,76,.2);border-bottom:1px solid rgba(201,168,76,.2);padding:1.25rem;display:flex;justify-content:center;gap:2.5rem;flex-wrap:wrap}
+  .proof-item{text-align:center}
+  .proof-num{font-size:1.6rem;font-weight:800;color:var(--gold)}
+  .proof-lbl{font-size:.75rem;color:var(--lgrey);letter-spacing:.5px}
+
+  /* SECTIONS */
+  section{max-width:900px;margin:0 auto;padding:4rem 1.5rem}
+  h2{font-size:1.8rem;font-weight:700;margin-bottom:.5rem}
+  h2 span{color:var(--gold)}
+  .sub{color:var(--lgrey);margin-bottom:2.5rem;font-size:1rem}
+
+  /* PAIN */
+  .pain-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1rem}
+  .pain-card{background:rgba(255,70,70,.06);border:1px solid rgba(255,70,70,.2);border-radius:10px;padding:1.25rem}
+  .pain-card .icon{font-size:1.4rem;margin-bottom:.5rem}
+  .pain-card p{font-size:.9rem;color:#ddd;line-height:1.5}
+
+  /* FEATURES */
+  .feat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1.25rem}
+  .feat-card{background:rgba(201,168,76,.05);border:1px solid rgba(201,168,76,.15);border-radius:12px;padding:1.5rem}
+  .feat-icon{font-size:1.6rem;margin-bottom:.75rem}
+  .feat-card h3{font-size:1rem;font-weight:700;margin-bottom:.4rem;color:var(--gold)}
+  .feat-card p{font-size:.875rem;color:#bbb;line-height:1.5}
+
+  /* TABS PREVIEW */
+  .tabs-list{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:.5rem}
+  .tab-item{background:var(--mid);border:1px solid rgba(201,168,76,.2);border-radius:8px;padding:.75rem 1rem;font-size:.875rem;display:flex;align-items:center;gap:.5rem}
+  .tab-item .dot{width:8px;height:8px;border-radius:50%;background:var(--gold);flex-shrink:0}
+
+  /* PROOF */
+  .results-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1rem}
+  .result-card{background:var(--mid);border-radius:10px;padding:1.5rem;text-align:center}
+  .result-num{font-size:2.2rem;font-weight:800;color:var(--gold)}
+  .result-lbl{font-size:.8rem;color:var(--lgrey);margin-top:.25rem}
+  .result-ctx{font-size:.75rem;color:#666;margin-top:.5rem}
+
+  /* TESTIMONIAL */
+  .testimonial{background:rgba(201,168,76,.06);border-left:3px solid var(--gold);padding:1.5rem 2rem;border-radius:0 10px 10px 0;margin:2rem 0}
+  .testimonial blockquote{font-size:1rem;font-style:italic;color:#ddd;margin-bottom:.75rem}
+  .testimonial cite{font-size:.85rem;color:var(--gold);font-style:normal}
+
+  /* FOR WHO */
+  .who-list{display:flex;flex-direction:column;gap:.75rem}
+  .who-item{display:flex;align-items:flex-start;gap:.75rem;font-size:.95rem}
+  .who-check{color:#4ade80;font-size:1.1rem;margin-top:.1rem;flex-shrink:0}
+  .who-x{color:#f87171;font-size:1.1rem;margin-top:.1rem;flex-shrink:0}
+
+  /* PRICING */
+  .pricing-card{background:var(--mid);border:2px solid var(--gold);border-radius:16px;padding:2.5rem;max-width:480px;margin:0 auto;text-align:center}
+  .pricing-badge{background:var(--gold);color:#0D0D1A;font-size:.75rem;font-weight:700;padding:.25rem .75rem;border-radius:20px;display:inline-block;margin-bottom:1rem;letter-spacing:1px}
+  .pricing-price{font-size:3.5rem;font-weight:800;color:var(--gold);margin:.5rem 0}
+  .pricing-price sup{font-size:1.5rem;vertical-align:top;margin-top:.75rem}
+  .pricing-old{color:#666;font-size:.9rem;text-decoration:line-through;margin-bottom.5rem}
+  .pricing-features{list-style:none;text-align:left;margin:1.5rem 0;display:flex;flex-direction:column;gap:.6rem}
+  .pricing-features li{font-size:.9rem;color:#ccc;display:flex;align-items:center;gap:.5rem}
+  .pricing-features li::before{content:"✓";color:var(--gold);font-weight:700}
+  .guarantee{font-size:.8rem;color:#888;margin-top:1rem}
+
+  /* FAQ */
+  .faq-list{display:flex;flex-direction:column;gap:1rem}
+  .faq-item{background:var(--mid);border-radius:10px;padding:1.25rem 1.5rem}
+  .faq-q{font-weight:700;margin-bottom:.5rem;color:var(--gold);font-size:.95rem}
+  .faq-a{font-size:.875rem;color:#bbb;line-height:1.6}
+
+  /* SCRIPT VIDEO */
+  .script-section{background:rgba(201,168,76,.04);border:1px solid rgba(201,168,76,.15);border-radius:12px;padding:2rem}
+  .script-step{margin-bottom:1.5rem;padding-bottom:1.5rem;border-bottom:1px solid rgba(255,255,255,.06)}
+  .script-step:last-child{border-bottom:none;margin-bottom:0;padding-bottom:0}
+  .script-time{font-size:.75rem;background:var(--gold);color:#0D0D1A;padding:.2rem .6rem;border-radius:4px;display:inline-block;font-weight:700;margin-bottom:.4rem}
+  .script-step h4{font-size:.95rem;font-weight:700;margin-bottom:.4rem}
+  .script-step p{font-size:.875rem;color:#bbb;line-height:1.5}
+  .script-say{background:rgba(255,255,255,.05);border-left:2px solid var(--gold);padding:.75rem 1rem;margin-top:.5rem;border-radius:0 6px 6px 0;font-style:italic;font-size:.875rem;color:#ddd}
+
+  /* SOCIAL */
+  .social-post{background:var(--mid);border-radius:12px;padding:1.5rem;margin-bottom:1.5rem;border:1px solid rgba(201,168,76,.15)}
+  .social-header{display:flex;align-items:center;gap:.75rem;margin-bottom:1rem;padding-bottom:1rem;border-bottom:1px solid rgba(255,255,255,.08)}
+  .social-avatar{width:40px;height:40px;background:var(--gold);border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;color:#0D0D1A;font-size:.9rem}
+  .social-name{font-weight:700;font-size:.95rem}
+  .social-handle{font-size:.8rem;color:#888}
+  .social-platform{font-size:.75rem;background:rgba(201,168,76,.15);color:var(--gold);padding:.2rem .6rem;border-radius:4px;margin-left:auto}
+  .social-body{font-size:.9rem;line-height:1.7;color:#ddd;white-space:pre-line}
+  .social-tags{margin-top:.75rem;font-size:.85rem;color:rgba(201,168,76,.7)}
+  .copy-btn{background:transparent;border:1px solid rgba(201,168,76,.3);color:var(--gold);padding:.3rem .75rem;border-radius:6px;font-size:.75rem;cursor:pointer;margin-top:.75rem}
+  .copy-btn:hover{background:rgba(201,168,76,.1)}
+
+  /* FOOTER */
+  footer{text-align:center;padding:2rem;border-top:1px solid rgba(255,255,255,.08);color:#555;font-size:.8rem}
+</style>
+</head>
+<body>
+
+<nav>
+  <span class="logo">HPT COACHING</span>
+  <a href="#pricing" class="nav-cta">Obtenir le fichier — 39€</a>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="badge">POWERLIFTING ÉLITE · MÉTHODE HPT</div>
+  <h1>Le système de suivi que les <span>champions Masters</span> utilisent vraiment</h1>
+  <p>Un fichier Excel pro conçu par un athlète IPF — 2ème Europe, 5ème Monde. 23 onglets, table RPE, simulateur de match, suivi poids, progression multi-semaines. Tout automatisé.</p>
+  <div class="hero-btns">
+    <a href="#pricing"><button class="btn-primary">Obtenir le HPT Pro System</button></a>
+    <a href="#features"><button class="btn-secondary">Voir les fonctionnalités</button></a>
+  </div>
+  <p class="price-tag">Prix de lancement : <s>59€</s> → <strong>39€</strong> pour les 30 premiers</p>
+</div>
+
+<!-- PROOF STRIP -->
+<div class="proof-strip">
+  <div class="proof-item"><div class="proof-num">620 kg</div><div class="proof-lbl">TOTAL OFFICIEL IPF</div></div>
+  <div class="proof-item"><div class="proof-num">2ème</div><div class="proof-lbl">EUROPE MASTERS -83KG</div></div>
+  <div class="proof-item"><div class="proof-num">5ème</div><div class="proof-lbl">MONDE IPF MASTERS</div></div>
+  <div class="proof-item"><div class="proof-num">23</div><div class="proof-lbl">ONGLETS PRO</div></div>
+  <div class="proof-item"><div class="proof-num">589</div><div class="proof-lbl">FORMULES ACTIVES</div></div>
+</div>
+
+<!-- PAIN -->
+<section>
+  <h2>Tu te reconnais <span>dans ces situations ?</span></h2>
+  <p class="sub">Ce que la plupart des powerlifters font — et pourquoi ça limite leur progression</p>
+  <div class="pain-grid">
+    <div class="pain-card"><div class="icon">📓</div><p>Tu notes tes séances dans un carnet ou une appli basique sans jamais analyser les données</p></div>
+    <div class="pain-card"><div class="icon">🎯</div><p>Le jour de la compétition, tu improvises tes barres d'essai sans stratégie définie à l'avance</p></div>
+    <div class="pain-card"><div class="icon">📉</div><p>Tu n'as aucune idée de ton tonnage hebdo, de ton INOL, ni de si tu es en surcharge ou sous-entraîné</p></div>
+    <div class="pain-card"><div class="icon">⚖️</div><p>La gestion du poids avant compétition se fait à l'instinct, sans suivi quotidien structuré</p></div>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section id="features">
+  <h2>Le HPT Pro System — <span>tout ce dont tu as besoin</span></h2>
+  <p class="sub">Un écosystème complet, pas juste un tableau de sets et reps</p>
+  <div class="feat-grid">
+    <div class="feat-card"><div class="feat-icon">📅</div><h3>Planification semaine</h3><p>Saisie rapide avec listes déroulantes intelligentes. 276 exercices, 8 groupes musculaires. Tonnage calculé automatiquement.</p></div>
+    <div class="feat-card"><div class="feat-icon">📊</div><h3>Récapitulatif auto</h3><p>Sets, Reps, Tonnage, RPE Moyen, INOL — tout calculé instantanément. Aucun calcul manuel.</p></div>
+    <div class="feat-card"><div class="feat-icon">🎯</div><h3>Simulateur de match</h3><p>Entres tes 1RM → tes 3 barres sont calculées (91-96-100%). Plan d'échauffement + stratégie adaptative si essai raté.</p></div>
+    <div class="feat-card"><div class="feat-icon">💡</div><h3>Table RPE officielle</h3><p>Calcule la charge pour n'importe quel RPE cible. Mode inverse : 1RM + charge → reps possibles. Arrondi à 2,5 kg.</p></div>
+    <div class="feat-card"><div class="feat-icon">⚖️</div><h3>Suivi poids 14 jours</h3><p>Objectif progressif quotidien, moyennes glissantes, alerte automatique si hors catégorie. Parfait pour le water cut.</p></div>
+    <div class="feat-card"><div class="feat-icon">📈</div><h3>Progression multi-semaines</h3><p>Archive chaque semaine en un copier-coller. Courbes d'évolution sur 20 semaines. Tonnage, RPE, INOL comparés.</p></div>
+    <div class="feat-card"><div class="feat-icon">🏆</div><h3>Palmarès officiel</h3><p>Tous tes résultats compétition chronologiques. Essais réussis en vert, ratés en rouge barré. Médailles automatiques.</p></div>
+    <div class="feat-card"><div class="feat-icon">📖</div><h3>Guide d'utilisation</h3><p>7 sections, autonome en 10 minutes. FAQ intégrée. Zéro besoin de formation externe.</p></div>
+  </div>
+</section>
+
+<!-- TABS -->
+<section>
+  <h2>Les <span>9 onglets</span> inclus dans le fichier</h2>
+  <p class="sub">Chaque onglet a une fonction précise — rien de superflu</p>
+  <div class="tabs-list">
+    <div class="tab-item"><div class="dot"></div>🏠 Accueil & profil</div>
+    <div class="tab-item"><div class="dot"></div>📖 Guide d'utilisation</div>
+    <div class="tab-item"><div class="dot"></div>📅 Ma Semaine</div>
+    <div class="tab-item"><div class="dot"></div>📊 Récapitulatif</div>
+    <div class="tab-item"><div class="dot"></div>📈 Progression</div>
+    <div class="tab-item"><div class="dot"></div>🎯 Simulateur Match</div>
+    <div class="tab-item"><div class="dot"></div>💡 Calculateur RPE</div>
+    <div class="tab-item"><div class="dot"></div>⚖️ Suivi Poids</div>
+    <div class="tab-item"><div class="dot"></div>🏆 Palmarès</div>
+  </div>
+</section>
+
+<!-- RESULTS -->
+<section>
+  <h2>Les résultats qui <span>prouvent la méthode</span></h2>
+  <p class="sub">Ces chiffres sont les miens — construits avec ce système</p>
+  <div class="results-grid">
+    <div class="result-card"><div class="result-num">215 kg</div><div class="result-lbl">Squat</div><div class="result-ctx">European Masters Classic PL</div></div>
+    <div class="result-card"><div class="result-num">167.5 kg</div><div class="result-lbl">Bench Press</div><div class="result-ctx">World Classic Bench Press Champ.</div></div>
+    <div class="result-card"><div class="result-num">245 kg</div><div class="result-lbl">Deadlift</div><div class="result-ctx">European Masters Classic PL</div></div>
+    <div class="result-card"><div class="result-num">420.27</div><div class="result-lbl">Score Dots</div><div class="result-ctx">Top mondial Masters 2 -83 kg</div></div>
+  </div>
+  <div class="testimonial">
+    <blockquote>"Ce système m'a permis de structurer chaque semaine d'entraînement avec précision, de ne jamais rater une barre d'ouverture en compétition, et de progresser de 33 kg de total en 2 ans de pratique structurée."</blockquote>
+    <cite>— Karim Houas · @benchmaster1975 · 2ème Championnats d'Europe FA Masters 2 · -83 kg</cite>
+  </div>
+</section>
+
+<!-- FOR WHO -->
+<section>
+  <h2>Ce fichier est fait <span>pour toi si…</span></h2>
+  <div class="who-list">
+    <div class="who-item"><span class="who-check">✓</span><span>Tu pratiques le powerlifting en compétition (FFForce, FFTRI, IPF) ou tu veux t'y préparer</span></div>
+    <div class="who-item"><span class="who-check">✓</span><span>Tu veux suivre ta progression réelle sur plusieurs mois, pas juste tes séances au jour le jour</span></div>
+    <div class="who-item"><span class="who-check">✓</span><span>Tu gères ta catégorie de poids et tu veux un outil de water cut fiable</span></div>
+    <div class="who-item"><span class="who-check">✓</span><span>Tu utilises la méthode RPE et tu veux calculer tes charges avec précision</span></div>
+    <div class="who-item"><span class="who-check">✓</span><span>Tu as Excel (Microsoft 365 ou Excel 2016+) sur PC ou Mac</span></div>
+    <div class="who-item" style="margin-top:.75rem"><span class="who-x">✗</span><span>Ce fichier n'est pas pour les débutants absolus — il faut connaître les bases du powerlifting</span></div>
+    <div class="who-item"><span class="who-x">✗</span><span>Il ne fonctionne pas sur tablette ou téléphone — Excel desktop uniquement</span></div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section id="pricing">
+  <h2 style="text-align:center">Un seul <span>investissement</span></h2>
+  <p class="sub" style="text-align:center">Livraison immédiate par email après paiement</p>
+  <div class="pricing-card">
+    <div class="pricing-badge">OFFRE DE LANCEMENT</div>
+    <div class="pricing-old">Prix normal : 59€</div>
+    <div class="pricing-price"><sup>€</sup>39</div>
+    <p style="color:#888;font-size:.85rem;margin-bottom:1.5rem">Prix pour les 30 premiers acheteurs</p>
+    <ul class="pricing-features">
+      <li>Fichier HPT_Client_Pro.xlsx — accès immédiat</li>
+      <li>9 onglets professionnels prêts à l'emploi</li>
+      <li>Guide d'utilisation intégré complet</li>
+      <li>Table RPE officielle (méthode HPT)</li>
+      <li>Simulateur de match + stratégie adaptive</li>
+      <li>Suivi poids 14 jours water cut</li>
+      <li>Palmarès compétition intégré</li>
+      <li>Mises à jour gratuites v1 → v2</li>
+    </ul>
+    <a href="mailto:benchmaster1975@gmail.com?subject=Commande HPT Pro System&body=Bonjour, je souhaite acheter le HPT Pro System à 39€. Merci de m'envoyer les instructions de paiement.">
+      <button class="btn-primary" style="width:100%;font-size:1.1rem;padding:1rem">Obtenir le HPT Pro System — 39€</button>
+    </a>
+    <p class="guarantee">Satisfait ou remboursé 7 jours · Paiement sécurisé · Livraison email sous 24h</p>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section>
+  <h2>Questions <span>fréquentes</span></h2>
+  <div class="faq-list">
+    <div class="faq-item"><div class="faq-q">C'est quoi exactement comme format de fichier ?</div><div class="faq-a">Un fichier .xlsx Microsoft Excel. Il fonctionne sur Excel 2016, 2019, 2021 et Microsoft 365. Il ne fonctionne pas sur Google Sheets (certaines formules avancées ne sont pas compatibles).</div></div>
+    <div class="faq-item"><div class="faq-q">J'ai besoin de compétences Excel pour l'utiliser ?</div><div class="faq-a">Non. Le guide d'utilisation intégré t'explique tout en 10 minutes. Tu remplis des cases et les calculs se font tout seuls. Les formules sont protégées pour éviter tout accident.</div></div>
+    <div class="faq-item"><div class="faq-q">C'est adapté à tous les niveaux de powerlifting ?</div><div class="faq-a">Il est conçu pour les pratiquants qui connaissent les bases du squat, bench, deadlift. Que tu sois en catégorie départementale ou au niveau national, la structure fonctionne.</div></div>
+    <div class="faq-item"><div class="faq-q">Est-ce que le fichier fonctionne sur Mac ?</div><div class="faq-a">Oui, avec Excel pour Mac (Microsoft 365). Pas avec Numbers d'Apple.</div></div>
+    <div class="faq-item"><div class="faq-q">Comment je reçois le fichier ?</div><div class="faq-a">Par email dans les 24h après confirmation du paiement. Tu reçois le fichier + un email de bienvenue avec des conseils d'utilisation.</div></div>
+  </div>
+</section>
+
+<!-- FOOTER CTA -->
+<section style="text-align:center;padding-bottom:3rem">
+  <h2>Prêt à passer au niveau <span>supérieur ?</span></h2>
+  <p style="color:#aaa;margin-bottom:2rem">Rejoins les powerlifters qui utilisent la méthode HPT</p>
+  <a href="#pricing"><button class="btn-primary" style="font-size:1.1rem;padding:1rem 3rem">Obtenir le HPT Pro System — 39€</button></a>
+  <p style="color:#555;font-size:.8rem;margin-top:1rem">benchmaster1975@gmail.com · @benchmaster1975</p>
+</section>
+
+<footer>
+  <p>© 2026 HPT Coaching — Karim Houas · Tous droits réservés</p>
+  <p style="margin-top:.5rem">Ce fichier est vendu pour usage personnel uniquement. Toute revente ou redistribution est interdite.</p>
+</footer>
+
+</body>
+</html>
